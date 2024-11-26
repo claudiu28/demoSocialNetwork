@@ -11,6 +11,7 @@ module ubb.scs.map.demosocialnetwork {
     requires eu.hansolo.tilesfx;
     requires java.dotenv;
     requires java.sql;
+    requires annotations;
 
     opens ubb.scs.map.demosocialnetwork.domain;
     exports ubb.scs.map.demosocialnetwork.domain;
@@ -26,8 +27,12 @@ module ubb.scs.map.demosocialnetwork {
     exports ubb.scs.map.demosocialnetwork.utils.events;
     exports ubb.scs.map.demosocialnetwork.utils.observer;
 
+    opens ubb.scs.map.demosocialnetwork.context;
+    exports ubb.scs.map.demosocialnetwork.context;
+
     opens ubb.scs.map.demosocialnetwork to javafx.fxml;
     exports ubb.scs.map.demosocialnetwork;
     exports ubb.scs.map.demosocialnetwork.controller;
     opens ubb.scs.map.demosocialnetwork.controller to javafx.fxml;
+
 }

@@ -9,7 +9,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="447.0"
             prefWidth="1106.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="ubb.scs.map.demosocialnetwork.Welcome">
+            fx:controller="ubb.scs.map.demosocialnetwork.controller.Welcome">
     <Text fill="#2f71c2" layoutX="236.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome!"
           textAlignment="CENTER">
         <font>
@@ -23,7 +23,8 @@
             <Font name="Georgia Pro" size="16.0"/>
         </font>
     </Text>
-    <Button fx:id="LoginButton" layoutX="37.0" layoutY="222.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="258.0" text="LogIn"
+    <Button fx:id="LoginButton" layoutX="37.0" layoutY="222.0" mnemonicParsing="false" prefHeight="35.0"
+            prefWidth="258.0" text="LogIn"
             onAction="#goToLogin" textAlignment="CENTER" textFill="#161716">
         <font>
             <Font size="16.0"/>
@@ -53,7 +54,7 @@
           text=" Follow your interests, meet new people, and join vibrant communities." textAlignment="JUSTIFY"
           wrappingWidth="602.136661529541">
         <font>
-          <Font name="Georgia Pro Italic" size="18.0"/>
+            <Font name="Georgia Pro Italic" size="18.0"/>
         </font>
     </Text>
 </AnchorPane>

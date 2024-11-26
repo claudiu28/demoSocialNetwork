@@ -14,7 +14,7 @@ public class FriendshipValidation implements Validator <Friendship>{
         if(entity.getIdUser2() <= 0){
             throw new ValidationException("Your second user does not exist!");
         }
-        if(!entity.getStatus().equals("PENDING")  && !entity.getStatus().equals("ACCEPTED") && !entity.getStatus().equals("DECLINED")){
+        if(!entity.getStatus().equals("PENDING")  && !entity.getStatus().equals("ACCEPTED") && !entity.getStatus().equals("DENIED")){
             throw new ValidationException("Your friendship status is not accepted!");
         }
     }

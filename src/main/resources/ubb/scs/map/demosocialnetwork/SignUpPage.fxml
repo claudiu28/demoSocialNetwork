@@ -60,7 +60,7 @@
                    promptText="Enter your last name"/>
         <TextField fx:id="username" layoutX="14.0" layoutY="98.0" prefHeight="25.0" prefWidth="329.0"
                    promptText="Enter your username"/>
-        <Button fx:id="SignUpButton" layoutX="14.0" layoutY="357.0" mnemonicParsing="false" onAction="#registerUser"
+        <Button fx:id="SignUpButton" layoutX="14.0" layoutY="357.0" mnemonicParsing="false"
                 prefHeight="25.0" prefWidth="165.0" text="SignUp"/>
         <Button fx:id="SignInButton" layoutX="193.0" layoutY="357.0" mnemonicParsing="false" onAction="#goToLogIn"
                 prefHeight="25.0" prefWidth="151.0" text="LogIn"/>

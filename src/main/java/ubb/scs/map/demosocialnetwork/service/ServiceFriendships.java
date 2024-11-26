@@ -1,5 +1,7 @@
 package ubb.scs.map.demosocialnetwork.service;
 
+import javafx.stage.Stage;
+import ubb.scs.map.demosocialnetwork.context.ApplicationContext;
 import ubb.scs.map.demosocialnetwork.domain.Friendship;
 import ubb.scs.map.demosocialnetwork.domain.User;
 import ubb.scs.map.demosocialnetwork.repository.Repository;
@@ -15,142 +17,160 @@ import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class ServiceFriendships implements Observable<Friendship> {
-    List<Observer<Friendship>> observerFriendshipsList = new CopyOnWriteArrayList<>();
-    Repository<Long, Friendship> friendshipRepository;
+    private final List<Observer<Friendship>> observers = new CopyOnWriteArrayList<>();
+    private final Repository<Long, Friendship> friendshipRepository;
+    private final ApplicationContext applicationContext;
 
-    public ServiceFriendships(Repository<Long, Friendship> friendshipRepository) {
+    public ServiceFriendships(Repository<Long, Friendship> friendshipRepository, ApplicationContext applicationContext) {
         this.friendshipRepository = friendshipRepository;
+        this.applicationContext = applicationContext;
     }
 
     @Override
     public void addObserver(Observer<Friendship> observer) {
-        observerFriendshipsList.add(observer);
+        observers.add(observer);
     }
 
     @Override
     public void removeObserver(Observer<Friendship> observer) {
-        observerFriendshipsList.remove(observer);
+        observers.remove(observer);
     }
 
     @Override
     public void notifyObservers(Event<Friendship> event) {
-        observerFriendshipsList.forEach(observer -> observer.update(event));
+        observers.forEach(observer -> observer.update(event));
     }
 
-    public boolean VerifyFriendshipWithUsersIds(Long UId1, Long UId2) {
-        for (Friendship friendship : friendshipRepository.findAll()) {
-            if (friendship.getIdUser1().equals(UId1) && friendship.getIdUser2().equals(UId2)) {
-                return true;
-            } else if (friendship.getIdUser1().equals(UId2) && friendship.getIdUser2().equals(UId1)) {
+    public boolean verifyFriendshipWithUsersIds(Long userId1, Long userId2) {
+        if (userId1 == null || userId2 == null) {
+            return false;
+        }
+        Iterable<Friendship> friendships = friendshipRepository.findAll();
+        for (Friendship friendship : friendships) {
+            boolean directFriendship = friendship.getIdUser1().equals(userId1) &&
+                    friendship.getIdUser2().equals(userId2);
+            boolean reverseFriendship = friendship.getIdUser1().equals(userId2) &&
+                    friendship.getIdUser2().equals(userId1);
+
+            if (directFriendship || reverseFriendship) {
                 return true;
             }
         }
         return false;
     }
 
-    public Optional<Friendship> sendFriendRequest(Long receiverId) {
-        User user = CurrentUserSession.getInstance().getCurrentUser();
+    public Optional<Friendship> sendFriendRequest(Long receiverId, Stage stage) {
+        User user = applicationContext.getCurrentUser(stage);
+        if (user == null) {
+            return Optional.empty();
+        }
         Long senderId = user.getId();
 
-        if (VerifyFriendshipWithUsersIds(senderId, receiverId)) {
+        if (verifyFriendshipWithUsersIds(senderId, receiverId)) {
             return Optional.empty();
         }
 
         Friendship newFriendship = new Friendship(senderId, receiverId, FriendshipsRequests.PENDING.getValue(), LocalDateTime.now());
         Optional<Friendship> friendship = friendshipRepository.save(newFriendship);
-        if (friendship.isPresent()) {
-            notifyObservers(new Event<>(EventType.SEND_FRIEND_REQUEST, friendship.get()));
-            return friendship;
-        }
-        return Optional.empty();
+
+        friendship.ifPresent(friendship1 -> notifyObservers(new Event<>(EventType.SEND_FRIEND_REQUEST, friendship1)));
+
+        return friendship;
     }
 
     public Optional<Friendship> deleteFriendship(Long Id) {
         Optional<Friendship> friendship = friendshipRepository.findOne(Id);
-        if (friendship.isPresent() && friendship.get().getStatus().equals(FriendshipsRequests.ACCEPTED.getValue())) {
-            Optional<Friendship> friendshipDeleted = friendshipRepository.delete(Id);
-            friendship.ifPresent(value -> notifyObservers(new Event<>(EventType.DELETE_FRIENDSHIP, value)));
-            return friendshipDeleted;
+
+        if (friendship.isEmpty() || !friendship.get().getStatus().equals(FriendshipsRequests.ACCEPTED.getValue())) {
+            return Optional.empty();
         }
-        return Optional.empty();
+
+        Optional<Friendship> friendshipDeleted = friendshipRepository.delete(Id);
+        friendshipDeleted.ifPresent(value -> notifyObservers(new Event<>(EventType.DELETE_FRIENDSHIP, value)));
+
+        return friendshipDeleted;
     }
 
-    public boolean acceptMethodCondition(Long CurrentFriendship, Long CurrentUserId, String status) {
-        return CurrentFriendship.equals(CurrentUserId) && status.equals(FriendshipsRequests.PENDING.getValue());
+    public boolean isOnPendingAndExists(Long friendId, Long currentUserId, String status) {
+        return friendId.equals(currentUserId) && status.equals(FriendshipsRequests.PENDING.getValue());
     }
 
-    public Optional<Friendship> acceptFriendRequest(Long Id) {
+    public Optional<Friendship> acceptFriendRequest(Long Id, Stage stage) {
         Optional<Friendship> acceptedFriendship = friendshipRepository.findOne(Id);
-        if (acceptedFriendship.isPresent()) {
-            if (acceptMethodCondition(acceptedFriendship.get().getIdUser2(), CurrentUserSession.getInstance().getCurrentUser().getId(),
-                    acceptedFriendship.get().getStatus())) {
 
-                acceptedFriendship.get().setStatus(FriendshipsRequests.ACCEPTED.getValue());
-                acceptedFriendship.get().setDate(LocalDateTime.now());
-
-                Optional<Friendship> updatedFriendship = friendshipRepository.update(acceptedFriendship.get());
-
-                notifyObservers(new Event<>(EventType.STATUS_FRIENDSHIP_ACCEPTED, acceptedFriendship.get()));
-
-                if (updatedFriendship.isPresent())
-                    return acceptedFriendship;
-            }
+        if (acceptedFriendship.isEmpty() || !isOnPendingAndExists(acceptedFriendship.get().getIdUser2(), applicationContext.getCurrentUser(stage).getId(),
+                acceptedFriendship.get().getStatus())) {
+            return Optional.empty();
         }
-        return Optional.empty();
+
+        acceptedFriendship.get().setStatus(FriendshipsRequests.ACCEPTED.getValue());
+        acceptedFriendship.get().setDate(LocalDateTime.now());
+
+        Optional<Friendship> updatedFriendship = friendshipRepository.update(acceptedFriendship.get());
+
+        if (updatedFriendship.isEmpty()) {
+            return Optional.empty();
+        }
+
+        notifyObservers(new Event<>(EventType.STATUS_FRIENDSHIP_ACCEPTED, updatedFriendship.get()));
+        return updatedFriendship;
     }
 
 
-    public Optional<Friendship> deniedFriendRequest(Long Id) {
+    public Optional<Friendship> denyFriendRequest(Long Id) {
         Optional<Friendship> deniedFriendship = friendshipRepository.findOne(Id);
-        if (deniedFriendship.isPresent() && deniedFriendship.get().getStatus().equals(FriendshipsRequests.PENDING.getValue())) {
-
-            deniedFriendship.get().setStatus(FriendshipsRequests.DENIED.getValue());
-            deniedFriendship.get().setDate(LocalDateTime.now());
-
-            Optional<Friendship> updatedFriendship = friendshipRepository.update(deniedFriendship.get());
-
-            notifyObservers(new Event<>(EventType.STATUS_FRIENDSHIP_DENIED, deniedFriendship.get()));
-            if (updatedFriendship.isPresent())
-                return deniedFriendship;
+        if (deniedFriendship.isEmpty() || !deniedFriendship.get().getStatus().equals(FriendshipsRequests.PENDING.getValue())) {
+            return Optional.empty();
         }
-        return Optional.empty();
+
+        deniedFriendship.get().setStatus(FriendshipsRequests.DENIED.getValue());
+        deniedFriendship.get().setDate(LocalDateTime.now());
+
+        Optional<Friendship> updatedFriendship = friendshipRepository.update(deniedFriendship.get());
+        if (updatedFriendship.isEmpty())
+            return Optional.empty();
+
+        notifyObservers(new Event<>(EventType.STATUS_FRIENDSHIP_DENIED, updatedFriendship.get()));
+        return updatedFriendship;
+
     }
 
-    public boolean MethodFriends(Long Id) {
-        return CurrentUserSession.getInstance().getCurrentUser().getId().equals(Id);
+    public boolean isCurrentUserEqualToUserTwo(Long Id, Stage stage) {
+        return applicationContext.getCurrentUser(stage).getId().equals(Id);
     }
 
-    public boolean TypeMethodFriends(Friendship friendship) {
-        return MethodFriends(friendship.getIdUser1()) || MethodFriends((friendship.getIdUser2()));
+    public boolean isFriends(Friendship friendship, Stage stage) {
+        return isCurrentUserEqualToUserTwo(friendship.getIdUser1(), stage) || isCurrentUserEqualToUserTwo((friendship.getIdUser2()), stage);
     }
 
-    public List<Friendship> getCurrentUserFriendshipsAccepted() {
+    public List<Friendship> getCurrentUserFriendshipsAccepted(Stage stage) {
         Iterable<Friendship> friendships = friendshipRepository.findAll();
         List<Friendship> friendshipList = new ArrayList<>();
+
         friendships.forEach(friendship -> {
-            if (TypeMethodFriends(friendship) && friendship.getStatus().equals(FriendshipsRequests.ACCEPTED.getValue())) {
+            if (isFriends(friendship, stage) && friendship.getStatus().equals(FriendshipsRequests.ACCEPTED.getValue())) {
                 friendshipList.add(friendship);
             }
         });
         return friendshipList;
     }
 
-    public List<Friendship> getCurrentUserFriendshipsDenied() {
+    public List<Friendship> getCurrentUserFriendshipsDenied(Stage stage) {
         Iterable<Friendship> friendships = friendshipRepository.findAll();
         List<Friendship> friendshipList = new ArrayList<>();
         friendships.forEach(friendship -> {
-            if (TypeMethodFriends(friendship) && friendship.getStatus().equals(FriendshipsRequests.DENIED.getValue())) {
+            if (isFriends(friendship, stage) && friendship.getStatus().equals(FriendshipsRequests.DENIED.getValue())) {
                 friendshipList.add(friendship);
             }
         });
         return friendshipList;
     }
 
-    public List<Friendship> getCurrentUserFriendshipsPending() {
+    public List<Friendship> getCurrentUserFriendshipsPending(Stage stage) {
         Iterable<Friendship> friendships = friendshipRepository.findAll();
         List<Friendship> friendshipList = new ArrayList<>();
         friendships.forEach(friendship -> {
-            if (TypeMethodFriends(friendship) && friendship.getStatus().equals(FriendshipsRequests.PENDING.getValue())) {
+            if (isFriends(friendship, stage) && friendship.getStatus().equals(FriendshipsRequests.PENDING.getValue())) {
                 friendshipList.add(friendship);
             }
         });

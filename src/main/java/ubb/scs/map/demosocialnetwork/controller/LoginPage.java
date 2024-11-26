@@ -2,20 +2,19 @@ package ubb.scs.map.demosocialnetwork.controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+import ubb.scs.map.demosocialnetwork.context.ApplicationContext;
 import ubb.scs.map.demosocialnetwork.controller.alert.AlertShow;
 import ubb.scs.map.demosocialnetwork.domain.User;
-import ubb.scs.map.demosocialnetwork.factory.ServiceAuthFactory;
-import ubb.scs.map.demosocialnetwork.service.CurrentUserSession;
 import ubb.scs.map.demosocialnetwork.service.ServiceAuthentication;
 
 import java.util.Optional;
 
-public class LoginPage {
-    private final ServiceAuthentication serviceAuthentication;
+public class LoginPage extends BaseController {
+    private ServiceAuthentication serviceAuthentication;
 
     @FXML
     private Button LoginButton;
@@ -31,13 +30,24 @@ public class LoginPage {
     private TextField email;
 
     public LoginPage() {
-        this.serviceAuthentication = ServiceAuthFactory.getInstance();
+        try {
+            this.serviceAuthentication = ApplicationContext.getInstance().getServiceAuthentication();
+
+        } catch (Exception e) {
+            AlertShow.showAlert(Alert.AlertType.ERROR, "Error", "Something went wrong!", "Service initialization failed!");
+        }
+    }
+
+    @FXML
+    public void initialize() {
+        LoginButton.setOnAction(event -> loginUser());
     }
 
     @FXML
     public void goToWelcome() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ubb/scs/map/demosocialnetwork/Welcome.fxml"));
+            fxmlLoader.setControllerFactory(context -> new Welcome());
             javafx.scene.Parent root = fxmlLoader.load();
             javafx.stage.Stage stage = (javafx.stage.Stage) toWelcome.getScene().getWindow();
             stage.resizableProperty().setValue(false);
@@ -52,6 +62,7 @@ public class LoginPage {
     public void goToSignUp() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ubb/scs/map/demosocialnetwork/SignUpPage.fxml"));
+            fxmlLoader.setControllerFactory(context -> new SignUpPage());
             javafx.scene.Parent root = fxmlLoader.load();
             javafx.stage.Stage stage = (javafx.stage.Stage) SignUpButton.getScene().getWindow();
             stage.resizableProperty().setValue(false);
@@ -70,39 +81,34 @@ public class LoginPage {
 
         try {
             ValidationFields(username, password, email);
-            Optional<User> loggedUser = serviceAuthentication.login(username, email, password);
+            Stage homeStage = new Stage();
+
+            Optional<User> loggedUser = serviceAuthentication.login(username, email, password, homeStage);
             if (loggedUser.isPresent()) {
-                CurrentUserSession.getInstance().setCurrentUser(loggedUser.get());
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/ubb/scs/map/demosocialnetwork/UsersHome.fxml"));
-                UsersHome UsersHome = loader.getController();
-
+                homeStage.setTitle("Home" + " - " + username);
                 AlertShow.showAlert(Alert.AlertType.CONFIRMATION, "Success", "Successful login!", "Welcome");
+                openHomeWindow(homeStage);
 
-                Scene scene = new Scene(loader.load());
-                javafx.stage.Stage stage = (javafx.stage.Stage) LoginButton.getScene().getWindow();
-                stage.resizableProperty().setValue(false);
-                stage.setOnCloseRequest(event -> UsersHome.onClose());
-                stage.setScene(scene);
-                stage.show();
+                this.password.clear();
+                this.username.clear();
+                this.email.clear();
             } else {
-                AlertShow.showAlert(Alert.AlertType.ERROR, "Error", "User does not exist!", "User not exists!");
+                AlertShow.showAlert(Alert.AlertType.ERROR, "Error", "Check fields!", "User not exists!");
             }
         } catch (Exception e) {
-            AlertShow.showAlert(Alert.AlertType.ERROR, "Error", "Something went wrong!", "Something went wrong");
+            AlertShow.showAlert(Alert.AlertType.ERROR, "Error", "Something went wrong!", "Login failed");
         }
     }
 
-    public static void ValidationFields(String username, String password, String email) {
+    public void ValidationFields(String username, String password, String email) {
         if (username.isEmpty() || password.isEmpty() || email.isEmpty()) {
-            AlertShow.showAlert(Alert.AlertType.ERROR, "Invalid Field", "Something went wrong!", "Please fill all the fields");
-            return;
+            throw new IllegalArgumentException("Please fill all fields");
         }
         if (password.length() < 6) {
-            AlertShow.showAlert(Alert.AlertType.ERROR, "Invalid Field", "Something went wrong!", "Password must be at least 6 characters");
-            return;
+            throw new IllegalArgumentException("Password should have at least 6 characters");
         }
         if (!email.contains("@")) {
-            AlertShow.showAlert(Alert.AlertType.ERROR, "Invalid Field", "Something went wrong!", "Please enter a valid email");
+            throw new IllegalArgumentException("Please enter a valid email");
         }
     }
 }

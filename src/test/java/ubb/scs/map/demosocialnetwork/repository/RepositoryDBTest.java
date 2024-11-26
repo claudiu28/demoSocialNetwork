@@ -176,8 +176,8 @@ public class RepositoryDBTest {
 
 
         LocalDateTime now = LocalDateTime.now();
-        Friendship friendshipOne = new Friendship(user1.get().getId(),user2.get().getId(), "ACCEPTED", now);
-        Friendship friendshipTwo = new Friendship(user1.get().getId(),user3.get().getId(), "ACCEPTED", now);
+        Friendship friendshipOne = new Friendship(user1.get().getId(), user2.get().getId(), "ACCEPTED", now);
+        Friendship friendshipTwo = new Friendship(user1.get().getId(), user3.get().getId(), "ACCEPTED", now);
 
         Optional<Friendship> friendship1 = repositoryFriendship.save(friendshipOne);
         Optional<Friendship> friendship2 = repositoryFriendship.save(friendshipTwo);
@@ -214,8 +214,8 @@ public class RepositoryDBTest {
 
 
         LocalDateTime now = LocalDateTime.now();
-        Friendship friendshipOne = new Friendship(user1.get().getId(),user2.get().getId(), "ACCEPTED", now);
-        Friendship friendshipTwo = new Friendship(user1.get().getId(),user3.get().getId(), "ACCEPTED", now);
+        Friendship friendshipOne = new Friendship(user1.get().getId(), user2.get().getId(), "ACCEPTED", now);
+        Friendship friendshipTwo = new Friendship(user1.get().getId(), user3.get().getId(), "ACCEPTED", now);
 
         Optional<Friendship> friendship1 = repositoryFriendship.save(friendshipOne);
         Optional<Friendship> friendship2 = repositoryFriendship.save(friendshipTwo);
@@ -248,8 +248,8 @@ public class RepositoryDBTest {
         assertTrue(user3.isPresent());
 
         LocalDateTime now = LocalDateTime.now();
-        Friendship friendshipOne = new Friendship(user1.get().getId(),user2.get().getId(), "ACCEPTED", now);
-        Friendship friendshipTwo = new Friendship(user1.get().getId(),user3.get().getId(), "ACCEPTED", now);
+        Friendship friendshipOne = new Friendship(user1.get().getId(), user2.get().getId(), "ACCEPTED", now);
+        Friendship friendshipTwo = new Friendship(user1.get().getId(), user3.get().getId(), "ACCEPTED", now);
 
         Optional<Friendship> friendship1 = repositoryFriendship.save(friendshipOne);
         Optional<Friendship> friendship2 = repositoryFriendship.save(friendshipTwo);
@@ -281,8 +281,8 @@ public class RepositoryDBTest {
         assertTrue(user3.isPresent());
 
         LocalDateTime now = LocalDateTime.now();
-        Friendship friendshipOne = new Friendship(user1.get().getId(),user2.get().getId(), "ACCEPTED", now);
-        Friendship friendshipTwo = new Friendship(user1.get().getId(),user3.get().getId(), "ACCEPTED", now);
+        Friendship friendshipOne = new Friendship(user1.get().getId(), user2.get().getId(), "ACCEPTED", now);
+        Friendship friendshipTwo = new Friendship(user1.get().getId(), user3.get().getId(), "ACCEPTED", now);
 
         Optional<Friendship> friendship1 = repositoryFriendship.save(friendshipOne);
         Optional<Friendship> friendship2 = repositoryFriendship.save(friendshipTwo);
@@ -315,8 +315,8 @@ public class RepositoryDBTest {
         assertTrue(user3.isPresent());
 
         LocalDateTime now = LocalDateTime.now();
-        Friendship friendshipOne = new Friendship(user1.get().getId(),user2.get().getId(), "ACCEPTED", now);
-        Friendship friendshipTwo = new Friendship(user1.get().getId(),user3.get().getId(), "ACCEPTED", now);
+        Friendship friendshipOne = new Friendship(user1.get().getId(), user2.get().getId(), "ACCEPTED", now);
+        Friendship friendshipTwo = new Friendship(user1.get().getId(), user3.get().getId(), "ACCEPTED", now);
 
         Optional<Friendship> friendship1 = repositoryFriendship.save(friendshipOne);
         Optional<Friendship> friendship2 = repositoryFriendship.save(friendshipTwo);
@@ -324,7 +324,7 @@ public class RepositoryDBTest {
         assertTrue(friendship1.isPresent());
         assertTrue(friendship2.isPresent());
 
-        Friendship updatedFriendship = new Friendship(user1.get().getId(),user3.get().getId(), "DECLINED", now);
+        Friendship updatedFriendship = new Friendship(user1.get().getId(), user3.get().getId(), "DECLINED", now);
         updatedFriendship.setId(friendship2.get().getId());
 
         Optional<Friendship> friendshipOld = repositoryFriendship.update(updatedFriendship);

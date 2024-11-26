@@ -1,6 +1,6 @@
 package ubb.scs.map.demosocialnetwork.utils.events;
 
-public class Event <E>{
+public class Event<E> {
     private final EventType type;
     private final E data;
 

@@ -13,47 +13,52 @@
 
 <AnchorPane prefHeight="441.0" prefWidth="879.0" xmlns="http://javafx.com/javafx/23.0.1"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="ubb.scs.map.demosocialnetwork.controller.LoginPage">
-   <ImageView fitHeight="392.0" fitWidth="417.0" layoutX="34.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
-      <Image url="@../../../../assets/imag3.jpg"/>
-   </ImageView>
-   <Text fill="#349ee0" layoutX="633.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="LogIn"
-         textAlignment="CENTER">
-      <font>
-         <Font name="Georgia Pro" size="25.0"/>
-      </font>
-   </Text>
-   <TextField fx:id="username" layoutX="467.0" layoutY="169.0" prefHeight="25.0" prefWidth="373.0" promptText="Enter your username"/>
-   <TextField fx:id="email" layoutX="467.0" layoutY="232.0" prefHeight="25.0" prefWidth="373.0" promptText="Enter your email"/>
-   <ButtonBar prefHeight="40.0" prefWidth="200.0"/>
-   <ButtonBar layoutX="447.0" layoutY="358.0" prefHeight="40.0" prefWidth="392.0">
-      <buttons>
-         <Button fx:id="SignUpButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="193.0" text="SignUp"
-                 onAction="#goToSignUp" textAlignment="CENTER"/>
-         <Button fx:id="toWelcome" onAction="#goToWelcome" mnemonicParsing="false" prefHeight="23.0" text="Go Back" textAlignment="CENTER"/>
-         <Button  fx:id="LoginButton" onAction="#loginUser" mnemonicParsing="false" prefHeight="25.0" prefWidth="86.0"
-                 text="LogIn" textAlignment="CENTER"/>
-      </buttons>
-   </ButtonBar>
-   <Text layoutX="472.0" layoutY="164.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username">
-      <font>
-         <Font size="15.0"/>
-      </font>
-   </Text>
-   <Text layoutX="472.0" layoutY="227.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email">
-      <font>
-         <Font size="15.0"/>
-      </font>
-   </Text>
-   <Text layoutX="474.0" layoutY="292.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" textAlignment="CENTER">
-      <font>
-         <Font size="15.0"/>
-      </font>
-   </Text>
-   <PasswordField fx:id="password" layoutX="467.0" layoutY="297.0" prefHeight="25.0" prefWidth="373.0" promptText="Enter your password"/>
-   <Text fill="#1a9055" layoutX="488.0" layoutY="106.0" strokeType="OUTSIDE" strokeWidth="0.0"
-         text="Please LOGIN in our app!! Complete all fields!" textAlignment="CENTER">
-      <font>
-         <Font name="Georgia Pro Italic" size="16.0"/>
-      </font>
-   </Text>
+    <ImageView fitHeight="392.0" fitWidth="417.0" layoutX="34.0" layoutY="25.0" pickOnBounds="true"
+               preserveRatio="true">
+        <Image url="@../../../../assets/imag3.jpg"/>
+    </ImageView>
+    <Text fill="#349ee0" layoutX="633.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="LogIn"
+          textAlignment="CENTER">
+        <font>
+            <Font name="Georgia Pro" size="25.0"/>
+        </font>
+    </Text>
+    <TextField fx:id="username" layoutX="467.0" layoutY="169.0" prefHeight="25.0" prefWidth="373.0"
+               promptText="Enter your username"/>
+    <TextField fx:id="email" layoutX="467.0" layoutY="232.0" prefHeight="25.0" prefWidth="373.0"
+               promptText="Enter your email"/>
+    <ButtonBar prefHeight="40.0" prefWidth="200.0"/>
+    <ButtonBar layoutX="447.0" layoutY="358.0" prefHeight="40.0" prefWidth="392.0">
+        <buttons>
+            <Button fx:id="SignUpButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="193.0" text="SignUp"
+                    onAction="#goToSignUp" textAlignment="CENTER"/>
+            <Button fx:id="toWelcome" onAction="#goToWelcome" mnemonicParsing="false" prefHeight="23.0" text="Go Back"
+                    textAlignment="CENTER"/>
+            <Button fx:id="LoginButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="86.0"
+                    text="LogIn" textAlignment="CENTER"/>
+        </buttons>
+    </ButtonBar>
+    <Text layoutX="472.0" layoutY="164.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username">
+        <font>
+            <Font size="15.0"/>
+        </font>
+    </Text>
+    <Text layoutX="472.0" layoutY="227.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email">
+        <font>
+            <Font size="15.0"/>
+        </font>
+    </Text>
+    <Text layoutX="474.0" layoutY="292.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" textAlignment="CENTER">
+        <font>
+            <Font size="15.0"/>
+        </font>
+    </Text>
+    <PasswordField fx:id="password" layoutX="467.0" layoutY="297.0" prefHeight="25.0" prefWidth="373.0"
+                   promptText="Enter your password"/>
+    <Text fill="#1a9055" layoutX="488.0" layoutY="106.0" strokeType="OUTSIDE" strokeWidth="0.0"
+          text="Please LOGIN in our app!! Complete all fields!" textAlignment="CENTER">
+        <font>
+            <Font name="Georgia Pro Italic" size="16.0"/>
+        </font>
+    </Text>
 </AnchorPane>

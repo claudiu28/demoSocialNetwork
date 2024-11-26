@@ -12,141 +12,165 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="552.0" prefWidth="777.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ubb.scs.map.demosocialnetwork.controller.UsersHome">
-  <tabs>
-    <Tab text="Personal Information">
-      <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="582.0" prefWidth="842.0">
-               <children>
-                  <TableView layoutX="444.0" layoutY="14.0" prefHeight="474.0" prefWidth="318.0">
-                    <columns>
-                      <TableColumn prefWidth="75.0" text="Username" />
-                      <TableColumn prefWidth="75.0" text="Email" />
-                    </columns>
-                     <columnResizePolicy>
-                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                     </columnResizePolicy>
-                  </TableView>
-                  <Text fx:id="textEntry" layoutX="33.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hello!" wrappingWidth="94.24024200439453">
-                     <font>
-                        <Font name="Georgia Pro" size="20.0" />
-                     </font>
-                  </Text>
-                  <TextField fx:id="usernameCurentUser" layoutX="33.0" layoutY="81.0" prefHeight="25.0" prefWidth="324.0" />
-                  <TextField fx:id="emailCurentUser" layoutX="33.0" layoutY="138.0" prefHeight="25.0" prefWidth="326.0" />
-                  <TextField fx:id="lastNameCurentUser" layoutX="32.0" layoutY="197.0" prefHeight="25.0" prefWidth="326.0" />
-                  <Button fx:id="deleteAccountButton" layoutX="32.0" layoutY="301.0" mnemonicParsing="false"  prefHeight="25.0" prefWidth="327.0" text="Delete Account" />
-                  <Button fx:id="logoutButton" layoutX="31.0" layoutY="402.0" mnemonicParsing="false" onAction="#logout" prefHeight="25.0" prefWidth="327.0" text="LogOut Account" />
-                  <Button layoutX="31.0" layoutY="349.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="328.0" text="Update Account" />
-                  <TextField fx:id="firstNameCurentUser" layoutX="32.0" layoutY="251.0" prefHeight="25.0" prefWidth="327.0" />
-                  <Label layoutX="33.0" layoutY="63.0" text="Username">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="33.0" layoutY="120.0" text="Email">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="33.0" layoutY="176.0" text="LastName">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="32.0" layoutY="233.0" text="FirstName">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="32.0" layoutY="284.0" />
-               </children></AnchorPane>
-      </content>
-    </Tab>
-      <Tab text="Chat">
-        <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-        </content>
-      </Tab>
-    <Tab text="Friendships List">
-      <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="582.0" prefWidth="1076.0">
-               <children>
-                  <ListView fx:id="friendsPending" layoutX="14.0" layoutY="38.0" prefHeight="410.0" prefWidth="200.0" />
-                  <Label layoutX="41.0" layoutY="9.0" prefHeight="29.0" prefWidth="146.0" text="Pending Friends">
-                     <font>
-                        <Font name="Georgia Pro" size="20.0" />
-                     </font>
-                  </Label>
-                  <ListView fx:id="friendsAccepted" layoutX="274.0" layoutY="38.0" prefHeight="414.0" prefWidth="200.0" />
-                  <ListView fx:id="friendsDenied" layoutX="538.0" layoutY="38.0" prefHeight="411.0" prefWidth="200.0" />
-                  <Label layoutX="301.0" layoutY="11.0" text="Accepted Friends">
-                     <font>
-                        <Font name="System Italic" size="20.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="572.0" layoutY="11.0" text="Denied Friends">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                  </Label>
-                  <Button fx:id="acceptRequest" onAction="#acceptFriendRequest" layoutX="35.0" layoutY="464.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="157.0" text="Accept Request" />
-                  <Button layoutX="291.0" layoutY="465.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="165.0" text="Denied Request" />
-                  <Button layoutX="555.0" layoutY="465.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="165.0" text="Delete Friendship" />
-               </children></AnchorPane>
-      </content>
-    </Tab>
-      <Tab text="FInd Users">
-        <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-               <children>
-                  <Label layoutX="570.0" layoutY="7.0" text="Users">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="emailFriend" layoutX="36.0" layoutY="161.0" prefHeight="25.0" prefWidth="368.0" />
-                  <TextField fx:id="usernameFriend" layoutX="36.0" layoutY="113.0" prefHeight="25.0" prefWidth="368.0" />
-                  <TextField fx:id="firstNameFriend" layoutX="36.0" layoutY="261.0" prefHeight="25.0" prefWidth="371.0" />
-                  <TextField fx:id="lastNameFriend" layoutX="36.0" layoutY="212.0" prefHeight="25.0" prefWidth="371.0" />
-                  <Text layoutX="37.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="You choose:">
-                     <font>
-                        <Font size="25.0" />
-                     </font>
-                  </Text>
-                  <Button fx:id="addFriendButton" onAction="#sendFriendRequest" layoutX="164.0" layoutY="335.0" mnemonicParsing="false" text="Send friend request" />
-                  <Label layoutX="36.0" layoutY="95.0" text="Username">
-                     <font>
-                        <Font name="Georgia" size="15.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="36.0" layoutY="139.0" text="Email">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="38.0" layoutY="187.0" text="LastName">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="36.0" layoutY="238.0" text="First Name">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </Label>
-                  <TableView fx:id="allUsers" layoutX="441.0" layoutY="50.0" prefHeight="440.0" prefWidth="321.0">
-                    <columns>
-                      <TableColumn fx:id="usernameTable" prefWidth="75.0" text="Username" />
-                      <TableColumn fx:id="emailTable" prefWidth="75.0" text="Email" />
-                    </columns>
-                     <columnResizePolicy>
-                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                     </columnResizePolicy>
-                  </TableView>
-               </children>
-            </AnchorPane>
-        </content>
-      </Tab>
-  </tabs>
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="552.0"
+         prefWidth="777.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/23.0.1"
+         xmlns:fx="http://javafx.com/fxml/1" fx:controller="ubb.scs.map.demosocialnetwork.controller.UsersHome">
+    <tabs>
+        <Tab text="Personal Information">
+            <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="582.0" prefWidth="842.0">
+                    <children>
+                        <TableView fx:id="acceptedFriends" layoutX="444.0" layoutY="14.0" prefHeight="474.0"
+                                   prefWidth="318.0">
+                            <columns>
+                                <TableColumn fx:id="emailUsernameTable" prefWidth="75.0" text="Username"/>
+                                <TableColumn fx:id="friendsUsernameTable" prefWidth="75.0" text="Email"/>
+                            </columns>
+                            <columnResizePolicy>
+                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                            </columnResizePolicy>
+                        </TableView>
+                        <Text fx:id="textEntry" layoutX="33.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                              text="Hello!" wrappingWidth="94.24024200439453">
+                            <font>
+                                <Font name="Georgia Pro" size="20.0"/>
+                            </font>
+                        </Text>
+                        <TextField fx:id="usernameCurentUser" layoutX="33.0" layoutY="81.0" prefHeight="25.0"
+                                   prefWidth="324.0"/>
+                        <TextField fx:id="emailCurentUser" layoutX="33.0" layoutY="138.0" prefHeight="25.0"
+                                   prefWidth="326.0"/>
+                        <TextField fx:id="lastNameCurentUser" layoutX="32.0" layoutY="197.0" prefHeight="25.0"
+                                   prefWidth="326.0"/>
+                        <Button fx:id="deleteAccountButton" layoutX="32.0" layoutY="301.0" mnemonicParsing="false"
+                                prefHeight="25.0" prefWidth="327.0" text="Delete Account"/>
+                        <Button fx:id="logoutButton" layoutX="31.0" layoutY="402.0" mnemonicParsing="false"
+                                prefHeight="25.0" prefWidth="327.0" text="LogOut Account"/>
+                        <Button layoutX="31.0" layoutY="349.0" mnemonicParsing="false" prefHeight="25.0"
+                                prefWidth="328.0" text="Update Account"/>
+                        <TextField fx:id="firstNameCurentUser" layoutX="32.0" layoutY="251.0" prefHeight="25.0"
+                                   prefWidth="327.0"/>
+                        <Label layoutX="33.0" layoutY="63.0" text="Username">
+                            <font>
+                                <Font size="15.0"/>
+                            </font>
+                        </Label>
+                        <Label layoutX="33.0" layoutY="120.0" text="Email">
+                            <font>
+                                <Font size="15.0"/>
+                            </font>
+                        </Label>
+                        <Label layoutX="33.0" layoutY="176.0" text="LastName">
+                            <font>
+                                <Font size="15.0"/>
+                            </font>
+                        </Label>
+                        <Label layoutX="32.0" layoutY="233.0" text="FirstName">
+                            <font>
+                                <Font size="15.0"/>
+                            </font>
+                        </Label>
+                        <Label layoutX="32.0" layoutY="284.0"/>
+                    </children>
+                </AnchorPane>
+            </content>
+        </Tab>
+        <Tab text="Chat">
+            <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0"/>
+            </content>
+        </Tab>
+        <Tab text="Friendships List">
+            <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="582.0" prefWidth="1076.0">
+                    <children>
+                        <ListView fx:id="friendsPending" layoutX="14.0" layoutY="38.0" prefHeight="410.0"
+                                  prefWidth="200.0"/>
+                        <Label layoutX="41.0" layoutY="9.0" prefHeight="29.0" prefWidth="146.0" text="Pending Friends">
+                            <font>
+                                <Font name="Georgia Pro" size="20.0"/>
+                            </font>
+                        </Label>
+                        <ListView fx:id="friendsAccepted" layoutX="274.0" layoutY="38.0" prefHeight="414.0"
+                                  prefWidth="200.0"/>
+                        <ListView fx:id="friendsDenied" layoutX="538.0" layoutY="38.0" prefHeight="411.0"
+                                  prefWidth="200.0"/>
+                        <Label layoutX="301.0" layoutY="11.0" text="Accepted Friends">
+                            <font>
+                                <Font name="System Italic" size="20.0"/>
+                            </font>
+                        </Label>
+                        <Label layoutX="572.0" layoutY="11.0" text="Denied Friends">
+                            <font>
+                                <Font size="20.0"/>
+                            </font>
+                        </Label>
+                        <Button fx:id="acceptRequestButton" layoutX="35.0" layoutY="464.0" mnemonicParsing="false"
+                                prefHeight="30.0" prefWidth="157.0" text="Accept Request"/>
+                        <Button fx:id="deniedRequestButton" layoutX="291.0" layoutY="465.0" mnemonicParsing="false"
+                                prefHeight="30.0" prefWidth="165.0" text="Denied Request"/>
+                        <Button fx:id="removeFriendButton" layoutX="555.0" layoutY="465.0" mnemonicParsing="false"
+                                prefHeight="29.0" prefWidth="165.0" text="Delete Friendship"/>
+                    </children>
+                </AnchorPane>
+            </content>
+        </Tab>
+        <Tab text="FInd Users">
+            <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                    <children>
+                        <Label layoutX="570.0" layoutY="7.0" text="Users">
+                            <font>
+                                <Font size="20.0"/>
+                            </font>
+                        </Label>
+                        <TextField fx:id="emailFriend" layoutX="36.0" layoutY="161.0" prefHeight="25.0"
+                                   prefWidth="368.0"/>
+                        <TextField fx:id="usernameFriend" layoutX="36.0" layoutY="113.0" prefHeight="25.0"
+                                   prefWidth="368.0"/>
+                        <TextField fx:id="firstNameFriend" layoutX="36.0" layoutY="261.0" prefHeight="25.0"
+                                   prefWidth="371.0"/>
+                        <TextField fx:id="lastNameFriend" layoutX="36.0" layoutY="212.0" prefHeight="25.0"
+                                   prefWidth="371.0"/>
+                        <Text layoutX="37.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="You choose:">
+                            <font>
+                                <Font size="25.0"/>
+                            </font>
+                        </Text>
+                        <Button fx:id="addFriendButton" layoutX="164.0" layoutY="335.0" mnemonicParsing="false"
+                                text="Send friend request"/>
+                        <Label layoutX="36.0" layoutY="95.0" text="Username">
+                            <font>
+                                <Font name="Georgia" size="15.0"/>
+                            </font>
+                        </Label>
+                        <Label layoutX="36.0" layoutY="139.0" text="Email">
+                            <font>
+                                <Font size="15.0"/>
+                            </font>
+                        </Label>
+                        <Label layoutX="38.0" layoutY="187.0" text="LastName">
+                            <font>
+                                <Font size="15.0"/>
+                            </font>
+                        </Label>
+                        <Label layoutX="36.0" layoutY="238.0" text="First Name">
+                            <font>
+                                <Font size="16.0"/>
+                            </font>
+                        </Label>
+                        <TableView fx:id="allUsers" layoutX="441.0" layoutY="50.0" prefHeight="440.0" prefWidth="321.0">
+                            <columns>
+                                <TableColumn fx:id="usernameTable" prefWidth="75.0" text="Username"/>
+                                <TableColumn fx:id="emailTable" prefWidth="75.0" text="Email"/>
+                            </columns>
+                            <columnResizePolicy>
+                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                            </columnResizePolicy>
+                        </TableView>
+                    </children>
+                </AnchorPane>
+            </content>
+        </Tab>
+    </tabs>
 </TabPane>
